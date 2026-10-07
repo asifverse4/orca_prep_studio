@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
+  <title id="title">ORCA Prep Studio molecular orbit</title>
+  <desc id="desc">A stylized molecule rotates through three orbital rings beside the project name.</desc>
+  <defs>
+    <linearGradient id="space" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071b2b"/>
+      <stop offset="0.55" stop-color="#0b3040"/>
+      <stop offset="1" stop-color="#102d3a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#f7c873" stop-opacity="0.9"/>
+      <stop offset="0.45" stop-color="#ef8f5b" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#ef8f5b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="atom" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe1a6"/>
+      <stop offset="0.45" stop-color="#ef9b68"/>
+      <stop offset="1" stop-color="#bf5c50"/>
+    </linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="12"/></filter>
+    <filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#000" flood-opacity="0.4"/></filter>
+  </defs>
+
+  <rect width="900" height="360" rx="24" fill="url(#space)"/>
+  <circle cx="166" cy="180" r="128" fill="url(#glow)" filter="url(#soft)"/>
+  <g fill="#d2f0e8" opacity="0.7">
+    <circle cx="62" cy="54" r="1.5"/><circle cx="318" cy="66" r="1.2"/><circle cx="360" cy="288" r="1.4"/>
+    <circle cx="44" cy="290" r="1"/><circle cx="426" cy="42" r="1"/><circle cx="752" cy="56" r="1.2"/>
+    <circle cx="835" cy="296" r="1.6"/><circle cx="690" cy="320" r="1"/>
+  </g>
+
+  <g transform="translate(166 180)" fill="none" stroke-linecap="round">
+    <ellipse rx="118" ry="43" stroke="#8dd8c4" stroke-opacity="0.42" stroke-width="2" transform="rotate(-24)">
+      <animateTransform attributeName="transform" type="rotate" from="-24" to="336" dur="13s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse rx="118" ry="43" stroke="#f2b36d" stroke-opacity="0.48" stroke-width="2" transform="rotate(38)">
+      <animateTransform attributeName="transform" type="rotate" from="38" to="-322" dur="17s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse rx="118" ry="43" stroke="#f4eee0" stroke-opacity="0.3" stroke-width="1.5" transform="rotate(90)">
+      <animateTransform attributeName="transform" type="rotate" from="90" to="450" dur="21s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+
+  <g transform="translate(166 180)" filter="url(#shadow)">
+    <circle r="31" fill="url(#atom)" stroke="#ffe9bd" stroke-width="2"/>
+    <circle cx="-10" cy="-10" r="9" fill="#fff0c9" opacity="0.6"/>
+    <g>
+      <circle cx="88" cy="-28" r="16" fill="#75c9bd" stroke="#d7fff0" stroke-width="2">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="13s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="-73" cy="43" r="13" fill="#75c9bd" stroke="#d7fff0" stroke-width="2"/>
+      <circle cx="-35" cy="-82" r="11" fill="#75c9bd" stroke="#d7fff0" stroke-width="2"/>
+    </g>
+  </g>
+
+  <g transform="translate(405 0)">
+    <text x="0" y="145" fill="#f6f0df" font-family="Georgia, serif" font-size="42" letter-spacing="1">ORCA</text>
+    <text x="0" y="187" fill="#f0a36a" font-family="Georgia, serif" font-size="42" letter-spacing="1">PREP STUDIO</text>
+    <rect x="2" y="214" width="92" height="3" rx="1.5" fill="#75c9bd"/>
+    <text x="0" y="251" fill="#b7d8d1" font-family="Arial, sans-serif" font-size="16" letter-spacing="2">MOLECULAR INPUTS / HPC READY</text>
+    <text x="0" y="282" fill="#8eafb0" font-family="Arial, sans-serif" font-size="13">XYZ  &amp;  BATCH  &amp;  SLURM / PBS</text>
+  </g>
+</svg>
