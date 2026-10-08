@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hopfold"
+version = "0.1.0"
+description = "De novo peptide design using continuous Hopfield energy landscapes"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+  { name = "asifverse4" }
+]
+license = { text = "MIT" }
+dependencies = [
+  "torch>=2.1.0",
+  "rich>=13.0.0",
+  "numpy>=1.24.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/asifverse4/orca_prep_studio"
+Repository = "https://github.com/asifverse4/orca_prep_studio"
+Issues = "https://github.com/asifverse4/orca_prep_studio/issues"
+
+[project.scripts]
+hopfold = "hopfold.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["hopfold*"]

@@ -1,65 +1,97 @@
-# ORCA Prep Studio
+<div align="center">
 
-<p align="center">
-	<img src="assets/orca-orbit.svg" alt="Animated molecular orbit showing an ORCA input workflow" width="900">
-</p>
+# ⚛️ HopFold
 
-<p align="center"><strong>Prepare once. Submit everywhere.</strong><br>
-A small desktop studio for turning XYZ geometries into ready-to-run ORCA inputs and HPC job scripts.</p>
+**Continuous Hopfield Energy Landscapes for Synthetic Peptide Design**
 
-<p align="center">
-	<img src="https://img.shields.io/badge/Python-3.9%2B-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.9 or newer">
-	<img src="https://img.shields.io/badge/UI-Tkinter-2C3E50?style=flat-square" alt="Tkinter UI">
-	<img src="https://img.shields.io/badge/ORCA-input%20builder-0D9488?style=flat-square" alt="ORCA input builder">
-</p>
+[![Repository](https://img.shields.io/badge/GitHub-asifverse4%2Forca__prep__studio-181717?logo=github)](https://github.com/asifverse4/orca_prep_studio)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-brightgreen.svg)](#)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.1+-ee4c2c.svg)](https://pytorch.org/)
 
-## What it does
+</div>
 
-ORCA Prep Studio keeps the repetitive setup work in one focused window:
+HopFold is a CPU-friendly Python package that demonstrates how continuous Hopfield energy descent can be used to generate **synthetic, heuristic** peptide candidates and toy backbone projections.
 
-- Load one `.xyz` file or an entire folder for batch preparation.
-- Choose job type, method, basis set, dispersion, solvation, charge, and multiplicity.
-- Add frozen atoms and extra ORCA keywords when a calculation needs more control.
-- Generate `.inp` files plus optional SLURM or PBS scripts.
-- Create a `submit_all.sh` launcher for batch jobs.
+> ⚠️ **Scientific limitation**: Outputs are computational heuristics for experimentation and software demos. They are **not** experimentally validated therapeutics, and the microRNA-targeting/structure signals are synthetic proxies.
 
-## Run it
+## Installation
 
-Python's standard library is the only dependency.
+From this repository:
 
 ```bash
-python prep_studio.py
+pip install .
 ```
 
-On Linux, install Tkinter first if your Python distribution does not include it:
+Or editable mode for development:
 
 ```bash
-sudo apt install python3-tk
+pip install -e .
 ```
 
-## Workflow
+Dependencies are intentionally minimal:
 
-1. Choose **Single XYZ** for one molecule or **Batch Folder** for several `.xyz` files.
-2. Set the molecular properties and calculation parameters.
-3. Select **SLURM**, **PBS**, or **None** under HPC Submission.
-4. Click **Generate Inputs & Scripts**.
+- torch
+- numpy
+- rich
 
-Generated files are written beside the source geometry. A single job produces `<name>.inp` and, when enabled, `<name>.sh`. A batch run also produces `submit_all.sh`.
+## CLI Usage
 
-## XYZ format
+After installation, run:
 
-The loader expects a standard XYZ file: atom count on line one, an optional comment on line two, then one atom and three coordinates per line.
+```bash
+hopfold --target let-7 --length 18 --steps 35 --beta 2.5 --lr 0.08
+```
+
+### CLI options
+
+- `--target`: target microRNA label (heuristic bias only)
+- `--length`: peptide length (>0)
+- `--steps`: optimization steps (>0)
+- `--beta`: Hopfield inverse temperature (>0)
+- `--lr`: optimizer learning rate (>0)
+
+The CLI prints a Rich dashboard with sequence summary and ASCII backbone projection.
+
+## Python API
+
+```python
+from hopfold.designer import HopFoldEngine
+
+engine = HopFoldEngine(state_dim=64, beta=2.5)
+result = engine.design(length=16, target_mirna="let-7", steps=40, lr=0.08)
+
+print(result.sequence)
+print(result.final_energy)
+print(result.backbone_coords.shape)  # (length, 3)
+```
+
+## Testing
+
+Run tests with:
+
+```bash
+pytest -q
+```
+
+Test coverage includes:
+
+- Hopfield energy descent behavior
+- Designer output validity and input validation
+- Visualizer handling of empty/degenerate coordinates
+- CLI argument validation behavior
+
+## Project layout
 
 ```text
-3
-water
-O  0.000000  0.000000  0.000000
-H  0.758602  0.000000  0.504284
-H -0.758602  0.000000  0.504284
+hopfold/
+├── pyproject.toml
+├── requirements.txt
+├── hopfold/
+│   ├── __init__.py
+│   ├── core.py
+│   ├── designer.py
+│   ├── visualizer.py
+│   └── cli.py
+└── tests/
+    └── test_hopfold.py
 ```
-
-## Notes
-
-- The generated scripts assume an `orca` executable is available on the cluster path, or at the custom path entered in the UI.
-- `module load orca` is included in generated SLURM and PBS scripts so it can be adjusted to match the local cluster module name.
-- The tool generates input and submission files; it does not launch ORCA itself.
